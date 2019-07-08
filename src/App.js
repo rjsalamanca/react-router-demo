@@ -9,13 +9,18 @@ import Topics from './components/C_TopicPage';
 
 import './App.css';
 
-// Component
+const routes = [
+  { linkRoute: '/', linkName: 'Home page' },
+  { linkRoute: '/about', linkName: 'About page' },
+  { linkRoute: '/contact', linkName: 'Contact page' },
+  { linkRoute: '/topics', linkName: 'Topics page' }
+];
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <MainNav />
+        <MainNav routes={routes} />
         <Route
           path="/"
           exact
