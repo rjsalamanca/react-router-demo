@@ -1,21 +1,38 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
+import HomePage from './components/C_HomePage';
+
 import './App.css';
 
 // Component
-const Index = props => {
-  console.log('props are: ', props)
-  return (
-    <>
-      <h2>Home Page</h2>
-      <p>Hello {props.name}</p>
-    </>
-  );
-};
 
-const About = () => <h2>About Page</h2>
+const About = () => <h2>About Page</h2>;
 const Contact = () => <h2>Contact Page</h2>;
+const Topic = ({ match }) => <h3> Requested Param: {match.params.id} </h3>;
+const Topics = ({ match }) => {
+  return (
+    <div>
+      <h2>Topics</h2>
+      <nav>
+        <ul>
+          <li>
+            <Link to={`${match.url}/components`}>Components</Link>
+          </li>
+          <li>
+            <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
+          </li>
+        </ul>
+      </nav>
+      <Route path={`${match.path}/:id`} component={Topic} />
+      <Route
+        exact
+        path={match.path}
+        render={() => <h3>Please Select a topic.</h3>}
+      />
+    </div>
+  );
+}
 
 function App() {
   return (
@@ -32,15 +49,20 @@ function App() {
             <li>
               <Link to='/contact'>Contact Page</Link>
             </li>
+            <li>
+              <Link to='/topics'>Topics Page</Link>
+            </li>
           </ul>
         </nav>
         <Route
           path="/"
           exact
-          render={routeProps => <Index name="RJ" {...routeProps} />}
+          render={routeProps => <HomePage name="RJ" {...routeProps} />}
         />
         <Route path="/about" exact component={About} />
         <Route path="/contact" exact component={Contact} />
+        <Route path="/topics" component={Topics} />
+
       </div>
     </Router>
   );
